@@ -15,3 +15,5 @@
  - Python: dict
  - JavaScript: object (sometimes), Map
  - Swift:  Dictionart, Hashtable, Hashmap
+
+## Day 2 Lecure Notes
