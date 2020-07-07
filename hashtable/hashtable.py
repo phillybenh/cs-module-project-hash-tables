@@ -7,6 +7,8 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
+        self.head = None
+
 
 
 # Hash table can't have fewer than this many slots
@@ -21,7 +23,6 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-
         self.capacity = capacity
         self.data = [None] * capacity
         self.load = 0
@@ -56,7 +57,6 @@ class HashTable:
             hash ^= b
         return hash
 
-
     def djb2(self, key):
         """
         DJB2 hash, 32-bit
@@ -83,8 +83,18 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        self.data[index] = HashTableEntry(key, value)
-        self.load += 1
+        if self.data[index] is None:  # empty slot in the array
+            self.data[index] = HashTableEntry(key, value)
+            self.load += 1
+        else:
+            node = self.data[index]
+            if node.key == key:  # handles overwrites
+                node.value = value
+            else:  # else, insert new node at the head
+                newNode = HashTableEntry(key, value)
+                newNode.next = self.head
+                self.head = newNode
+                self.load += 1
 
     def delete(self, key):
         """
@@ -107,7 +117,7 @@ class HashTable:
         """
         index = self.hash_index(key)
         if self.data[index] == None:
-            return None # key not found
+            return None  # key not found
         else:
             return self.data[index].value
 
