@@ -98,6 +98,9 @@ class HashTable:
         slot.insert_at_head(newElement)
         self.load += 1
 
+        if self.get_load_factor() > 0.7:
+            self.resize(2 * self.capacity)
+
         # if self.data[index] is None:  # empty slot in the array
         #     self.data[index] = HashTableEntry(key, value)
         #     self.load += 1
@@ -160,8 +163,16 @@ class HashTable:
         rehashes all key/value pairs.
         Implement this.
         """
-        # Your code here
-        pass
+
+        data_copy = self.data
+        self.data = [LinkedList()] * new_capacity
+        self.load = 0
+        self.capacity = new_capacity
+        for item in data_copy:
+            element = item.head
+            while element is not None:
+                self.put(element.key, element.value)
+                element = element.next
 
 
 if __name__ == "__main__":
