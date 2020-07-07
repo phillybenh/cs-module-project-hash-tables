@@ -131,6 +131,8 @@ class HashTable:
             if element.key == key:
                slot.delete(element.value)
                self.load -= 1
+               if self.get_load_factor() < 0.2:
+                    self.resize(int(0.5 * self.capacity))
                return
             element = element.next
         print("Warning: The key was not found.")
@@ -163,11 +165,15 @@ class HashTable:
         rehashes all key/value pairs.
         Implement this.
         """
+        if new_capacity < MIN_CAPACITY:
+            resize_capacity = MIN_CAPACITY
+        else:
+            resize_capacity = new_capacity
 
         data_copy = self.data
-        self.data = [LinkedList()] * new_capacity
+        self.data = [LinkedList()] * resize_capacity
         self.load = 0
-        self.capacity = new_capacity
+        self.capacity = resize_capacity
         for item in data_copy:
             element = item.head
             while element is not None:
