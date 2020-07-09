@@ -29,6 +29,21 @@ def histogram(file_name):
         count[w] += 1
     sorted_words = {k: v for k, v in sorted(count.items(), \
         key=lambda item: item[1], reverse=True)}
-    return sorted_words
+
+    # find longest word
+    longest_length = 0
+    for word in sorted_words.keys():
+        longest_word = ""
+        if len(word) > len(longest_word):
+            longest_word = word
+        longest_length = len(longest_word)
+
+    output_string = ""
+    for element in sorted_words.items():
+        spaces = longest_length - len(element[0]) + 2
+        output = element[0] + (" " * spaces) + ("#" * element[1])
+        output_string += output + '\n'
+    return output_string
+        
 
 print(histogram("robin.txt"))
