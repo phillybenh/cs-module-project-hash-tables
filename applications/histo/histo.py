@@ -27,6 +27,8 @@ def histogram(file_name):
             count[w] = 0
 
         count[w] += 1
-    return count
+    sorted_words = {k: v for k, v in sorted(count.items(), \
+        key=lambda item: item[1], reverse=True)}
+    return sorted_words
 
 print(histogram("robin.txt"))
