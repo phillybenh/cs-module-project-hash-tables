@@ -55,6 +55,7 @@ def sentence_constructor(dict):
     # in case some work combo exits that puts us in a inf. loop
     while stop_word is False and sentence_length < 2000:
         word = random.choice(cache[current_word])
+        # print("***", cache[current_word])
         current_word = word
         sentence_words.append(current_word)
         sentence_length += 1
